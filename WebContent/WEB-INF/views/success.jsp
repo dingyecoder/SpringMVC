@@ -15,5 +15,22 @@
 	
 	${requestScope.time }
 
+	<br><br>
+
+	${requestScope.names }
+	<br><br>
+	
+	${requestScope.school }
+	<br>
+	${sessionScope.school }
+	<br><br>
+	
+	${sessionScope.user }
+	<br>
+	${sessionScope.user }
+	
+	
+	
+	
 </body>
 </html>

@@ -3,26 +3,76 @@ package com.springmvc;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.springmvc.bean.User;
 
+//@SessionAttributes(value={"user"},types=String.class)
 @RequestMapping("springmvc")
 @Controller
 public class TestMapping {
 	
+	
+	public final static String SUCCESS = "success";
+	
+	/**
+	 * @modelAttribute标记的方法，会在每个m目标方法执行之前被SpringMVC调用
+	 * @param id
+	 * @param map
+	 */
+	@ModelAttribute
+	public void getUser(@RequestParam(value="id",required=false) Integer id,Map<String,Object> map){
+		if(id != null){
+			User user = new User(1, "Bill", "1234", "bill@atguigu.com");
+			System.out.println(user);
+			map.put("user", user);
+		}
+	}
+	
+	@RequestMapping(value="testModelAttribute")
+	public String testModelAttribute(User user){
+		System.out.println("修改： " + user);
+		return SUCCESS;
+	}
+	
+	/**
+	 * sessionScope可以通过属性名指定需要放入到会话中的属性（实际上是value属性值）
+	 *            	也可以通过模型属性的对象类型指定哪些模型属性需要放到会话中（实际上是types的属性值）
+	 *            
+	 * @sessionScope 该属性只能放在类上
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value="testSessionAttribute")
+	public String testSessionAttributes(Map<String,Object> map){
+		User user = new User("Bill", "12345", "bill@java.com");
+		map.put("user", user);
+		map.put("school", "atguigu");
+		return SUCCESS;
+	}
+	
+	
+	@RequestMapping(value="testMap")
+	public String testMap(Map<String,Object> map){
+		map.put("names", Arrays.asList("Tom","Jerry"));
+		return "success";
+	}
 	
 	@RequestMapping(value="testModelAndView")
 	public ModelAndView testModelAndView(){

@@ -8,6 +8,20 @@
 </head>
 <body>
 	
+	<form action="springmvc/testModelAttribute" method="post">  
+		<input type="hidden" name="id" value="1"><br>
+		Username: <input type="text" name="username" value="Bill"><br>
+		Email: <input type="text" name="email" value="bill@atguigu.com"><br>
+		<input type="submit" value="submit">
+	</form>
+	<br><br>
+	
+	<a href="springmvc/testSessionAttribute">test session scope</a>
+	<br><br>
+	
+	<a href="springmvc/testMap">test Map</a>
+	<br><br>
+	
 	<a href="springmvc/testModelAndView">Test Model And View</a>
 	
 	<br><br>
