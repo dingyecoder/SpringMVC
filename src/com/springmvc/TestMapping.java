@@ -32,7 +32,7 @@ public class TestMapping {
 	public final static String SUCCESS = "success";
 	
 	/**
-	 * @modelAttribute标记的方法，会在每个m目标方法执行之前被SpringMVC调用
+	 * @modelAttribute标记的方法，会在每个目标方法执行之前被SpringMVC调用
 	 * @param id
 	 * @param map
 	 */
@@ -40,11 +40,22 @@ public class TestMapping {
 	public void getUser(@RequestParam(value="id",required=false) Integer id,Map<String,Object> map){
 		if(id != null){
 			User user = new User(1, "Bill", "1234", "bill@atguigu.com");
-			System.out.println(user);
+			System.out.println("从数据库取出 ： " + user);
 			map.put("user", user);
 		}
 	}
 	
+	/**
+	 * 运行流程:
+	 * 1. 先调用modelAttribute修饰的方法，取出对象，把对象放入到了Map中，键为:user
+	 * 2. SpringMVC从Map中取出User对象，并把对象的请求参数赋给该User对象的对应属性
+	 * 3. SpringMVC把上述对象传入目标方法的参数
+	 * 
+	 * 注意: 在 @ModelAttribute 修饰的方法中, 放入到 Map 时的键需要和目标方法入参类型的第一个字母小写的字符串一致!
+	 * 
+	 * @param user
+	 * @return
+	 */
 	@RequestMapping(value="testModelAttribute")
 	public String testModelAttribute(User user){
 		System.out.println("修改： " + user);
